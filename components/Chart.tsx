@@ -68,19 +68,20 @@ export default function Chart({ showBollinger, bollingerOptions }: ChartProps) {
         },
       },
       candle: {
+        // Removed the invalid type: "candle_solid" line
         bar: {
           upColor: "#26a69a",
           downColor: "#ef5350",
           noChangeColor: "#888888",
         },
         tooltip: {
-          showRule: "always",
+          showRule: "follow_cross",
           showType: "standard",
         },
       },
       indicator: {
         tooltip: {
-          showRule: "always",
+          showRule: "follow_cross",
           showType: "standard",
         },
       },
