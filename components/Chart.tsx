@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useRef, useState } from "react";
 import {
   init,
@@ -40,10 +39,10 @@ const generateSampleData = (): OHLCVData[] => {
 
     price = close;
     timestamp += 24 * 60 * 60 * 1000; 
+  } // <- This closing brace was missing!
 
   return data;
 };
-
 
 export default function Chart({ showBollinger, bollingerOptions }: ChartProps) {
   const chartRef = useRef<HTMLDivElement>(null);
@@ -106,7 +105,9 @@ export default function Chart({ showBollinger, bollingerOptions }: ChartProps) {
       }
     };
   }, [ohlcvData]);
- console.log(bollingerOptions.background.visible); 
+  
+  console.log(bollingerOptions.background.visible); 
+  
   useEffect(() => {
     if (!klineChartRef.current) return;
 
@@ -130,8 +131,6 @@ export default function Chart({ showBollinger, bollingerOptions }: ChartProps) {
         calc: (dataList: any[], indicator: any) => {
           const { calcParams } = indicator;
           const [period, multiplier] = calcParams;
-
-          
 
           return dataList.map((d, i) => {
             if (i < bollingerOptions.length - 1) {
@@ -190,7 +189,6 @@ export default function Chart({ showBollinger, bollingerOptions }: ChartProps) {
                 bollingerOptions.lower.lineStyle === "dashed" ? [5, 5] : [2, 2],
             },
           ],
-          
         },
       };
 
