@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { BollingerBandsOptions } from '../lib/types';
+import { BollingerBandsOptions, LineStyleSettings } from '../lib/types';
 
 interface BollingerSettingsProps {
   options: BollingerBandsOptions;
@@ -17,14 +17,14 @@ export default function BollingerSettings({
   const [activeTab, setActiveTab] = useState<'inputs' | 'style'>('inputs');
   const [localOptions, setLocalOptions] = useState<BollingerBandsOptions>(options);
 
-  const handleInputChange = (field: keyof BollingerBandsOptions, value: any) => {
+  const handleInputChange = (field: keyof BollingerBandsOptions, value: number | string) => {
     setLocalOptions(prev => ({ ...prev, [field]: value }));
   };
 
   const handleStyleChange = (
     section: 'basis' | 'upper' | 'lower' | 'background',
-    field: string,
-    value: any
+    field: keyof LineStyleSettings,
+    value: boolean | string | number
   ) => {
     setLocalOptions(prev => ({
       ...prev,
@@ -52,7 +52,7 @@ export default function BollingerSettings({
   }: { 
     title: string; 
     section: 'basis' | 'upper' | 'lower'; 
-    settings: any;
+    settings: LineStyleSettings;
   }) => (
     <div className="mb-6">
       <h4 className="text-sm font-medium mb-3 text-black">{title}</h4>
@@ -104,7 +104,7 @@ export default function BollingerSettings({
           <label className="block text-xs text-black mb-1">Line Style</label>
           <select
             value={settings.lineStyle}
-            onChange={(e) => handleStyleChange(section, 'lineStyle', e.target.value)}
+            onChange={(e) => handleStyleChange(section, 'lineStyle', e.target.value as 'solid' | 'dashed')}
             className="w-full px-2 py-1 text-sm bg-white border border-gray-300 rounded text-black "
           >
             <option value="solid">Solid</option>
@@ -174,7 +174,7 @@ export default function BollingerSettings({
                 </label>
                 <select
                   value={localOptions.maType}
-                  onChange={(e) => handleInputChange('maType', e.target.value)}
+                  onChange={(e) => handleInputChange('maType', e.target.value as 'SMA')}
                   className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-black "
                 >
                   <option value="SMA">SMA</option>
@@ -187,7 +187,7 @@ export default function BollingerSettings({
                 </label>
                 <select
                   value={localOptions.source}
-                  onChange={(e) => handleInputChange('source', e.target.value)}
+                  onChange={(e) => handleInputChange('source', e.target.value as 'close')}
                   className="w-full px-3 py-2 bg-white border border-gray-300 rounded text-black focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   <option value="close">Close</option>

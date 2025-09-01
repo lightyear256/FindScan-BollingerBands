@@ -128,9 +128,9 @@ export default function Chart({ showBollinger, bollingerOptions }: ChartProps) {
           { key: "mid", title: "MID: ", type: "line" },
           { key: "dn", title: "DN: ", type: "line" },
         ],
-        calc: (dataList: any[], indicator: any) => {
-          const { calcParams } = indicator;
-          const [period, multiplier] = calcParams;
+        calc: (dataList: OHLCVData[], indicator: { calcParams: number[] }) => {
+          // const { calcParams } = indicator;
+          // const [period, multiplier] = calcParams;
 
           return dataList.map((d, i) => {
             if (i < bollingerOptions.length - 1) {
