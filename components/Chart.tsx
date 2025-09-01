@@ -39,7 +39,7 @@ const generateSampleData = (): OHLCVData[] => {
 
     price = close;
     timestamp += 24 * 60 * 60 * 1000; 
-  } // <- This closing brace was missing!
+  }
 
   return data;
 };
@@ -68,7 +68,6 @@ export default function Chart({ showBollinger, bollingerOptions }: ChartProps) {
         },
       },
       candle: {
-        type: "candle_solid",
         bar: {
           upColor: "#26a69a",
           downColor: "#ef5350",
@@ -128,10 +127,7 @@ export default function Chart({ showBollinger, bollingerOptions }: ChartProps) {
           { key: "mid", title: "MID: ", type: "line" },
           { key: "dn", title: "DN: ", type: "line" },
         ],
-        calc: (dataList: OHLCVData[], indicator: { calcParams: number[] }) => {
-          // const { calcParams } = indicator;
-          // const [period, multiplier] = calcParams;
-
+        calc: (dataList: OHLCVData[]) => {
           return dataList.map((d, i) => {
             if (i < bollingerOptions.length - 1) {
               return {}; 
@@ -202,7 +198,7 @@ export default function Chart({ showBollinger, bollingerOptions }: ChartProps) {
         klineChartRef.current.getIndicators("candle_pane") || [];
       indicators.forEach((indicator) => {
         if (indicator.name?.startsWith("CUSTOM_BOLL")) {
-          klineChartRef.current.removeIndicator("candle_pane", indicator.name);
+          klineChartRef.current!.removeIndicator("candle_pane", indicator.name);
         }
       });
     }
